@@ -118,9 +118,9 @@ su -l "$consoleuser" -c "/usr/local/bin/brew update" 2>&1 | tee -a ${LOG}
 notify "Installation complete"
 
 # Tapping casks for driver, versions and fonts
-/usr/local/bin/brew tap caskroom/drivers
-/usr/local/bin/brew tap caskroom/versions
-/usr/local/bin/brew tap caskroom/fonts
+sudo -Hu $consoleuser /usr/local/bin/brew tap caskroom/drivers
+sudo -Hu $consoleuser /usr/local/bin/brew tap caskroom/versions
+sudo -Hu $consoleuser /usr/local/bin/brew tap caskroom/fonts
 #brew tap varunyellina/brew-varunyellina
 
 # Drivers
@@ -130,7 +130,7 @@ drivers=(
 
 # Install Drivers
 echo "Installing drivers..."
-/usr/local/bin/brew cask install ${drivers[@]}
+sudo -Hu $consoleuser /usr/local/bin/brew cask install ${drivers[@]}
 
 # Apps
 apps=(
@@ -208,7 +208,7 @@ apps=(
 
 # Install apps
 echo "Installing Apps..."
-/usr/local/bin/brew cask install ${apps[@]}
+sudo -Hu $consoleuser /usr/local/bin/brew cask install ${apps[@]}
 
 # Fonts
 fonts=(
@@ -223,4 +223,4 @@ fonts=(
 
 # Install Fonts
 #echo "Installing Fonts..."
-#/usr/local/bin/brew cask install ${fonts[@]}
+#sudo -Hu $consoleuser /usr/local/bin/brew cask install ${fonts[@]}
