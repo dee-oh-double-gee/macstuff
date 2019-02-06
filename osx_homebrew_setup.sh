@@ -17,7 +17,7 @@
 # Version: 1.0 - 21st May 2017
 
 # Set up variables and functions here
-export consoleuser="$(/bin/ls -l /dev/console | /usr/bin/awk '{ print $3 }')
+export consoleuser="$(/bin/ls -l /dev/console | /usr/bin/awk '{ print $3 }')"
 export brandid="com.company.id"
 export tn="/usr/local/cs/bin/terminal-notifier"
 export cd="/usr/local/cs/bin/cocoaDialog.app/Contents/MacOS/cocoaDialog"
