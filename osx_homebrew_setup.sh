@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+
 
 # Checking for and installing Homebrew.
 if ! which brew > /dev/null; then
@@ -9,9 +11,9 @@ if ! which brew > /dev/null; then
 fi 
 
 # Tapping casks for driver, versions and fonts
-brew tap caskroom/drivers
-brew tap caskroom/versions
-brew tap caskroom/fonts
+/usr/local/bin/brew tap caskroom/drivers
+/usr/local/bin/brew tap caskroom/versions
+/usr/local/bin/brew tap caskroom/fonts
 #brew tap varunyellina/brew-varunyellina
 
 # Drivers
@@ -21,7 +23,7 @@ drivers=(
 
 # Install Drivers
 echo "Installing drivers..."
-brew cask install ${drivers[@]}
+/usr/local/bin/brew cask install ${drivers[@]}
 
 # Apps
 apps=(
@@ -99,7 +101,7 @@ apps=(
 
 # Install apps
 echo "Installing Apps..."
-brew cask install ${apps[@]}
+/usr/local/bin/brew cask install ${apps[@]}
 
 # Fonts
 fonts=(
@@ -114,4 +116,4 @@ fonts=(
 
 # Install Fonts
 #echo "Installing Fonts..."
-#brew cask install ${fonts[@]}
+#/usr/local/bin/brew cask install ${fonts[@]}
