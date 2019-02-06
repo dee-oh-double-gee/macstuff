@@ -10,6 +10,71 @@
  #   echo "Homebrew already installed."
 #fi
 
+#!/bin/bash
+
+# Script to install Homebrew on a Mac.
+# Author: richard at richard - purves dot com
+# Version: 1.0 - 21st May 2017
+
+# Set up variables and functions here
+export consoleuser="$(python -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; import sys; username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]; username = [username,""][username in [u"loginwindow", None, u""]]; sys.stdout.write(username + "\n");')"
+export brandid="com.company.id"
+export tn="/usr/local/cs/bin/terminal-notifier"
+export cd="/usr/local/cs/bin/cocoaDialog.app/Contents/MacOS/cocoaDialog"
+export title="Homebrew Installation"
+
+# Logging stuff starts here
+export LOGFOLDER="/private/var/log/"
+export LOG=$LOGFOLDER"Homebrew.log"
+
+if [ ! -d "$LOGFOLDER" ];
+then
+    mkdir $LOGFOLDER
+fi
+
+function logme()
+{
+# Check to see if function has been called correctly
+    if [ -z "$1" ]
+    then
+        echo $( date )" - logme function call error: no text passed to function! Please recheck code!"
+        echo $( date )" - logme function call error: no text passed to function! Please recheck code!" >> $LOG
+        exit 1
+    fi
+
+# Log the passed details
+    echo -e $( date )" - $1" >> $LOG
+    echo -e $( date )" - $1"
+}
+
+function notify()
+{
+    OIFS=$IFS
+    IFS=$'\n'
+    su -l "$consoleuser" -c " "'"'$tn'"'" -sender "'"'$brandid'"'" -title "'"'$title'"'" -message "'"'$1'"'" "
+    logme "$1"
+    IFS=$OIFS
+}
+
+# Check and start logging - done twice for local log and for JAMF
+logme "Homebrew Installation"
+
+# Have the xcode command line tools been installed?
+notify "Checking for Xcode Command Line Tools installation"
+check=$( pkgutil --pkgs | grep com.apple.pkg.CLTools_Executables | wc -l | awk '{ print $1 }' )
+
+if [[ "$check" != 1 ]];
+then
+    notify "Installing Xcode Command Tools"
+    # This temporary file prompts the 'softwareupdate' utility to list the Command Line Tools
+    touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+    clt=$(softwareupdate -l | grep -B 1 -E "Command Line (Developer|Tools)" | awk -F"*" '/^ +\\*/ {print $2}' | sed 's/^ *//' | tail -n1)
+    softwareupdate -i "$clt"
+    rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+    /usr/bin/xcode-select --switch /Library/Developer/CommandLineTools
+fi
+
+# Is homebrew already installed?
 which -s brew
 if [[ $? = 1 ]];
 then
@@ -45,6 +110,12 @@ else
     exit 0
 fi
 
+# Make sure everything is up to date
+notify "Updating Homebrew"
+su -l "$consoleuser" -c "/usr/local/bin/brew update" 2>&1 | tee -a ${LOG}
+
+# Notify user that all is completed
+notify "Installation complete"
 
 # Tapping casks for driver, versions and fonts
 /usr/local/bin/brew tap caskroom/drivers
