@@ -94,8 +94,8 @@ then
 
     # Create a system wide cache folder
     mkdir -p /Library/Caches/Homebrew
-    chmod g+rwx /Library/Caches/Homebrew
-    chown $consoleuser /Library/Caches/Homebrew
+    chmod -R g+rwx /Library/Caches/Homebrew
+    chown -R $consoleuser /Library/Caches/Homebrew
 
     # Remove temporary folder
     rm -rf /usr/local/Homebrew
