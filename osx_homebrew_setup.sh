@@ -1,5 +1,5 @@
 #!/bin/bash
-
+consoleuser="$(/bin/ls -l /dev/console | /usr/bin/awk '{ print $3 }')"
 
 
 # Checking for and installing Homebrew.
