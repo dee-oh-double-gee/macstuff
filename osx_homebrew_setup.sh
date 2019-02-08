@@ -5,16 +5,16 @@ consoleuser="$(/bin/ls -l /dev/console | /usr/bin/awk '{ print $3 }')"
 # Checking for and installing Homebrew.
 if ! which brew > /dev/null; then
   echo “Installing Homebrew...”
-   sudo -Hu $consoleuser /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null
+   su -l $consoleuser /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null
 else
    echo "Homebrew already installed."
 fi
 
 
 # Tapping casks for driver, versions and fonts
-sudo -Hu $consoleuser /usr/local/bin/brew tap caskroom/drivers
-sudo -Hu $consoleuser /usr/local/bin/brew tap caskroom/versions
-sudo -Hu $consoleuser /usr/local/bin/brew tap caskroom/fonts
+su -l $consoleuser /usr/local/bin/brew tap caskroom/drivers
+su -l $consoleuser /usr/local/bin/brew tap caskroom/versions
+su -l $consoleuser /usr/local/bin/brew tap caskroom/fonts
 #brew tap varunyellina/brew-varunyellina
 
 # Drivers
@@ -24,7 +24,7 @@ drivers=(
 
 # Install Drivers
 echo "Installing drivers..."
-sudo -Hu $consoleuser /usr/local/bin/brew cask install ${drivers[@]}
+su -l $consoleuser /usr/local/bin/brew cask install ${drivers[@]}
 
 # Apps
 apps=(
@@ -102,7 +102,7 @@ apps=(
 
 # Install apps
 echo "Installing Apps..."
-sudo -Hu $consoleuser /usr/local/bin/brew cask install ${apps[@]}
+su -l $consoleuser /usr/local/bin/brew cask install ${apps[@]}
 
 # Fonts
 fonts=(
@@ -117,4 +117,4 @@ fonts=(
 
 # Install Fonts
 #echo "Installing Fonts..."
-#sudo -Hu $consoleuser /usr/local/bin/brew cask install ${fonts[@]}
+#su -l $consoleuser /usr/local/bin/brew cask install ${fonts[@]}
