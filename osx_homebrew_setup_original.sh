@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Checking for and installing Homebrew.
-if ! which brew > /dev/null; then
-      echo “Installing Homebrew...”
-      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null
-  else
-    echo "Homebrew already installed."
-fi
+#if ! which brew > /dev/null; then
+#      echo “Installing Homebrew...”
+#      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null
+#  else
+#    echo "Homebrew already installed."
+#fi
 
 # Tapping casks for driver, versions and fonts
 brew tap caskroom/drivers
