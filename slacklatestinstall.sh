@@ -9,7 +9,7 @@ then
 else
 
 # Variables
-VER=$(curl https://slack.com/downloads/osx | grep Version | cut -d ' ' -f 2 | cut -d '<' -f 1)
+VER=$(curl https://slack.com/downloads/mac | grep Version | cut -d ' ' -f 2 | cut -d '<' -f 1)
 EXTURL=https://downloads.slack-edge.com/mac_releases/Slack-"${VER}"-macOS.zip
 TMPDIR=/tmp/slack
 ZIPLOC=${TMPDIR}/Slack.zip
